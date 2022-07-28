@@ -68,9 +68,9 @@ jobs:
           upstream-sha256: ${{ steps.compile.outputs.upstream-sha256 }}
           stack: 'io.buildpacks.stacks.jammy'
           buildpack-toml-path: ${{ github.workspace }}/buildpack.toml
-      - name: Checkout Branch 'automation/dependencies/update'
+      - name: Checkout Branch 'automation/dependencies/update-jammy-${{ matrix.version }}'
         run: |
-          git checkout -b automation/dependencies/update
+          git checkout -b automation/dependencies/update-jammy-${{ matrix.version }}
       - name: Show git diff
         run: |
           cat ${{ github.workspace }}/buildpack.toml
@@ -83,7 +83,7 @@ jobs:
           pathspec: "."
 #          keyid: ${{ secrets.PAKETO_BOT_GPG_SIGNING_KEY_ID }}
 #          key: ${{ secrets.PAKETO_BOT_GPG_SIGNING_KEY }}
-      - name: Push Branch
+      - name: Push Branch 'automation/dependencies/update-jammy-${{ matrix.version }}'
         if: ${{ steps.commit.outputs.commit_sha != '' }}
         uses: paketo-buildpacks/github-config/actions/pull-request/push-branch@main
         with:
